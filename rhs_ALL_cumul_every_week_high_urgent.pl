@@ -178,7 +178,7 @@ $mygraph->set(
     bar_width   => 50,
     transparent => 0,
     x_labels_vertical => 1,
-    overwrite => 1,
+    cumulate    => 2,
     dclrs       => ['#A4A4A4', '#01DFD7', '#74DF00'],
     x_label_position   => 0.5,
     legend_placement     => 'RC',

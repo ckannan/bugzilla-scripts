@@ -18,7 +18,7 @@ sub get_open_bug_count
 	{
 	        chomp($_);
 		my $line = $_;
-		if ( $line =~ /opened/i && $line =~ /priority=high/i || $line =~ /priority=urgent/i )
+		if ( $line =~ /opened/i )
 		{
 			# split by ,
 			my @test1 = split ( /,/ , $line);
@@ -57,7 +57,7 @@ sub get_fix_bug_count
 	{
 	        chomp($_);
 		my $line = $_;
-		if ( $line =~ /resolved/i && $line =~ /priority=high/i || $line =~ /priority=urgent/i )
+		if ( $line =~ /resolved/i )
 		{
 			# split by ,
 			my @test1 = split ( /,/ , $line);
@@ -97,7 +97,7 @@ sub get_verified_bug_count
 	    chomp($_);
 		my $line = $_;
 		#print "line=$line\n";
-		if ( $line =~ /verified/i && $line =~ /priority=high/i || $line =~ /priority=urgent/i )
+		if ( $line =~ /verified/i )
 		{
 			# split by ,
 			my @test1 = split ( /,/ , $line);
@@ -127,7 +127,7 @@ return $count;
 
 # main program
 # read csv file
-open (FILE,"rhs_priority.csv");
+open (FILE,"rhs_2.0.z_priority.csv");
 @lines = <FILE>;
 close (FILE);
 
@@ -173,12 +173,12 @@ $mygraph->set(
 
     x_label     => 'Dates',
     y_label     => '# of Bugs - Every week',
-    title       => 'Red Hat Storage - Release Target: 2.1 - Cumulative - Bug Graph - Only High/Urgent Bugs',
+    title       => 'Red Hat Storage - Release Target: 2.0.z - Cumulative - Bug Graph',
     bar_spacing => 1,
     bar_width   => 50,
     transparent => 0,
     x_labels_vertical => 1,
-    cumulate    => 2,
+    cumulate    => 'true',
     dclrs       => ['#A4A4A4', '#01DFD7', '#74DF00'],
     x_label_position   => 0.5,
     legend_placement     => 'RC',
@@ -186,9 +186,10 @@ $mygraph->set(
     x_ticks      => 0,
     legend_marker_width  => 12,
     legend_marker_height => 12,
+    transparent  => 1,
 
 ) or warn $mygraph->error;
-$mygraph->set_title_font($font_file, 14);
+$mygraph->set_title_font($font_file, 15);
 $mygraph->set_x_label_font($font_file, 16);
 $mygraph->set_y_label_font($font_file, 16);
 $mygraph->set_x_axis_font($font_file, 11);
@@ -200,7 +201,7 @@ $mygraph->set_legend('NEW/ASSIGNED', 'MODIFIED/ON_QA', 'VERIFIED');
 my $myimage = $mygraph->plot(\@data) or die $mygraph->error;
 
 # write to file
-open OUT, ">rhs_cumul_every_week_high_urgent.png";
+open OUT, ">rhs_2.0.z_cumul_every_week.png";
 binmode OUT;
 print OUT $myimage->png;
 close (OUT);
